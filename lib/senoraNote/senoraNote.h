@@ -100,14 +100,4 @@
 #define EIGHTH 0.125
 #define SIXTEENTH 0.0625
 
-class playNote
-{
-    public:
-    private:
-    static void SENORA_NOTAS_BEBER();
-    static void SENORA_NOTAS_BANHEIRO();
-    static void SENORA_NOTAS_BRINCAR();
-    static void SENORA_NOTAS_DORMIR();
-    static void SENORA_NOTAS_COMER();
-};
 #endif

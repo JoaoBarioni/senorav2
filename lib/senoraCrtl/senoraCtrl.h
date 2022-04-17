@@ -13,11 +13,6 @@ class senoraCtrl
 private:
 public:
     static void init();
-    static void pressComer();
-    static void pressBeber();
-    static void pressBanheiro();
-    static void pressBrincar();
-    static void pressDormir();
 };
 
 #endif

@@ -1,9 +1,66 @@
 #include <Arduino.h>
 #include <senoraCtrl.h>
 #include <senoraNote.h>
+#include <senoraNote.cpp>
 
 unsigned long debouncing_time = 400;
 unsigned long last_millis;
+
+void SENORA_NOTAS_BEBER()
+{
+ for (int Note = 0; Note < 8; Note++)
+ {
+        int noteDuration = 1000 / musicBeberDurations[Note];
+        tone(PIN_BUZZER, musicBeber[Note], noteDuration);
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        noTone(PIN_BUZZER);
+ }
+}
+void SENORA_NOTAS_COMER()
+{
+    for (int Note = 0; Note < 8; Note++)
+    {
+        int noteDuration = 1000 / musicComerDurations[Note];
+        tone(PIN_BUZZER, musicComer[Note], noteDuration);
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        noTone(PIN_BUZZER);
+    }
+}
+void SENORA_NOTAS_BANHEIRO()
+{
+    for (int Note = 0; Note < 8; Note++)
+    {
+        int noteDuration = 1000 / musicBanheiroDurations[Note];
+        tone(PIN_BUZZER, musicBanheiro[Note], noteDuration);
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        noTone(PIN_BUZZER);
+    }
+}
+void SENORA_NOTAS_BRINCAR()
+{
+    for (int Note = 0; Note < 8; Note++)
+    {
+        int noteDuration = 1000 / musicBrincarDurations[Note];
+        tone(PIN_BUZZER, musicBrincar[Note], noteDuration);
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        noTone(PIN_BUZZER);
+    }
+}
+void SENORA_NOTAS_DORMIR()
+{
+    for (int Note = 0; Note < 8; Note++)
+    {
+        int noteDuration = 1000 / musicDormirDurations[Note];
+        tone(PIN_BUZZER, musicDormir[Note], noteDuration);
+        int pauseBetweenNotes = noteDuration * 1.30;
+        delay(pauseBetweenNotes);
+        noTone(PIN_BUZZER);
+    }
+}
 
 bool comer_pressed = false;
 void comer_button_pressed()
@@ -11,7 +68,7 @@ void comer_button_pressed()
   if (millis() - last_millis > debouncing_time)
   {
     last_millis = millis();
-    senoraNote::playNote(SENORA_NOTAS_COMER);
+    SENORA_NOTAS_COMER();
     comer_pressed = true;
   }
 }
@@ -21,7 +78,7 @@ void beber_button_pressed()
   if (millis() - last_millis > debouncing_time)
   {
     last_millis = millis();
-    senoraNote::playNote(SENORA_NOTAS_BEBER);
+    SENORA_NOTAS_BEBER();
     beber_pressed = true;
   }
 }
@@ -31,7 +88,7 @@ void banheiro_button_pressed()
   if (millis() - last_millis > debouncing_time)
   {
     last_millis = millis();
-    senoraNote::playNote(SENORA_NOTAS_BANHEIRO);
+    SENORA_NOTAS_BANHEIRO();
     banheiro_pressed = true;
   }
 }
@@ -41,7 +98,7 @@ void brincar_button_pressed()
   if (millis() - last_millis > debouncing_time)
   {
     last_millis = millis();
-    senoraNote::playNote(SENORA_NOTAS_BRINCAR);
+    SENORA_NOTAS_BRINCAR();
     brincar_pressed = true;
   }
 }
@@ -51,7 +108,7 @@ void dormir_button_pressed()
   if (millis() - last_millis > debouncing_time)
   {
     last_millis = millis();
-    senoraNote::playNote(SENORA_NOTAS_DORMIR);
+    SENORA_NOTAS_DORMIR();
     dormir_pressed = true;
   }
 }
@@ -59,14 +116,12 @@ void dormir_button_pressed()
 void setup()
 {
   Serial.begin(115200);
-  SenoraControl::init();
-
-  attachInterrupt(digitalPinToInterrupt(COMER), comer_button_pressed, FALLING);
-  attachInterrupt(digitalPinToInterrupt(BEBER), beber_button_pressed, FALLING);
-  attachInterrupt(digitalPinToInterrupt(BANHEIRO), banheiro_button_pressed, FALLING);
-  attachInterrupt(digitalPinToInterrupt(BRINCAR), brincar_button_pressed, FALLING);
-  attachInterrupt(digitalPinToInterrupt(DORMIR), dormir_button_pressed, FALLING);
-  ("[SETUP] END");
+  senoraCtrl::init();
+  attachInterrupt(digitalPinToInterrupt(bt_COMER), comer_button_pressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(bt_BEBER), beber_button_pressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(bt_BANHEIRO), banheiro_button_pressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(bt_BRINCAR), brincar_button_pressed, FALLING);
+  attachInterrupt(digitalPinToInterrupt(bt_DORMIR), dormir_button_pressed, FALLING);
 }
 void loop()
 {
